@@ -19,6 +19,8 @@ import com.codewithdurgesh.blog.payloads.ApiResponse;
 import com.codewithdurgesh.blog.payloads.UserDto;
 import com.codewithdurgesh.blog.services.Userservice;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
@@ -30,13 +32,13 @@ public class UserController {
 
 	
 	@PostMapping
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 		UserDto createUserDto = this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId) {
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId) {
 		UserDto updatedUserDto = userService.updateUser(userDto, userId);
 		return ResponseEntity.ok(updatedUserDto);
 	}
