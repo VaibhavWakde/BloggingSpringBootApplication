@@ -1,6 +1,7 @@
 package com.codewithdurgesh.blog.controllers;
 
 import com.codewithdurgesh.blog.entities.Post;
+import com.codewithdurgesh.blog.payloads.ApiResponse;
 import com.codewithdurgesh.blog.payloads.PostDto;
 import com.codewithdurgesh.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,29 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId) {
         List<PostDto> postDtos = this.postService.getPostsByCategory(categoryId);
         return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPost() {
+        List<PostDto> postDtos = this.postService.getAllPost();
+        return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Integer postId) {
+        PostDto postDtos = this.postService.getPostById(postId);
+        return new ResponseEntity<PostDto>(postDtos, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public ApiResponse deletePost(@PathVariable Integer postId) {
+        this.postService.deletePost(postId);
+        return new ApiResponse("Post is sucessfully deleted !!",true,HttpStatus.OK);
+    }
+
+    @PutMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> updatePost (@RequestBody PostDto postDto, @PathVariable Integer postId) {
+        PostDto dto = this.postService.updatePost(postDto,postId);
+        return new ResponseEntity<PostDto>(dto,HttpStatus.OK);
     }
 }
