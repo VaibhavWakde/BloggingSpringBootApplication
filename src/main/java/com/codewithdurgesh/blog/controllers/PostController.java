@@ -44,9 +44,11 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPost(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue = "10", required = false) Integer pageSize
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
     ) {
-        PostResponse postDtos = this.postService.getAllPost(pageNumber, pageSize);
+        PostResponse postDtos = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDir);
         return new ResponseEntity<PostResponse>(postDtos, HttpStatus.OK);
     }
 
@@ -59,12 +61,12 @@ public class PostController {
     @DeleteMapping("/posts/{postId}")
     public ApiResponse deletePost(@PathVariable Integer postId) {
         this.postService.deletePost(postId);
-        return new ApiResponse("Post is sucessfully deleted !!",true,HttpStatus.OK);
+        return new ApiResponse("Post is sucessfully deleted !!", true, HttpStatus.OK);
     }
 
     @PutMapping("/posts/{postId}")
-    public ResponseEntity<PostDto> updatePost (@RequestBody PostDto postDto, @PathVariable Integer postId) {
-        PostDto dto = this.postService.updatePost(postDto,postId);
-        return new ResponseEntity<PostDto>(dto,HttpStatus.OK);
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId) {
+        PostDto dto = this.postService.updatePost(postDto, postId);
+        return new ResponseEntity<PostDto>(dto, HttpStatus.OK);
     }
 }
