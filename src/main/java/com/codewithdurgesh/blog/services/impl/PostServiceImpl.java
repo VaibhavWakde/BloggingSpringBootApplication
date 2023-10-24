@@ -11,6 +11,9 @@ import com.codewithdurgesh.blog.repositories.UserRepo;
 import com.codewithdurgesh.blog.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -50,7 +53,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(PostDto postDto, Integer postId) {
-        Post post = this.postRepo.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","postId",postId));
+        Post post = this.postRepo.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post", "postId", postId));
         if (postDto.getTitle() != null)
             post.setTitle(postDto.getTitle());
         if (postDto.getContent() != null)
@@ -58,7 +61,7 @@ public class PostServiceImpl implements PostService {
         if (postDto.getImageName() != null)
             post.setImageName(post.getImageName());
         Post updatedPost = this.postRepo.save(post);
-        PostDto dto = this.modelMapper.map(updatedPost,PostDto.class);
+        PostDto dto = this.modelMapper.map(updatedPost, PostDto.class);
         return dto;
     }
 
@@ -69,8 +72,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        List<Post> posts = this.postRepo.findAll();
+    public List<PostDto> getAllPost(Integer pageNumber, Integer pageSize) {
+        Pageable p = PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost = this.postRepo.findAll(p);
+        List<Post> posts = pagePost.getContent();
         List<PostDto> postDtos = posts.stream().map((post) -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
         return postDtos;
     }
