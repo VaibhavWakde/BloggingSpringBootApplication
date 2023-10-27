@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Setter
 public class CategoryDto {
     private Integer categoryId;
-    @NotBlank
+    @NotBlank(message = "category title should not be blank")
     @Size(min = 4, message = "Min size of category title is 4")
     private String categoryTitle;
 

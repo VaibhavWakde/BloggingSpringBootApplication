@@ -61,7 +61,7 @@ public class PostServiceImpl implements PostService {
         if (postDto.getContent() != null)
             post.setContent(postDto.getContent());
         if (postDto.getImageName() != null)
-            post.setImageName(post.getImageName());
+            post.setImageName(postDto.getImageName());
         Post updatedPost = this.postRepo.save(post);
         PostDto dto = this.modelMapper.map(updatedPost, PostDto.class);
         return dto;

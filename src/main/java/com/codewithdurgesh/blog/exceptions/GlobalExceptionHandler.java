@@ -1,5 +1,6 @@
 package com.codewithdurgesh.blog.exceptions;
 
+import org.apache.tomcat.util.http.fileupload.impl.InvalidContentTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,6 +22,13 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
         ApiResponse apiResponse = new ApiResponse(message, false, HttpStatus.NOT_FOUND);
         return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidContentTypeException.class)
+    public ResponseEntity<ApiResponse> handleInvalidContentTypeException(InvalidContentTypeException ex) {
+        String message = ex.getMessage();
+        ApiResponse apiResponse = new ApiResponse(message, false, HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.EXPECTATION_FAILED);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
