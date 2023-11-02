@@ -25,6 +25,6 @@ public class BlogAppApis1Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(this.passwordEncoder.encode("user1"));
+		System.out.println(this.passwordEncoder.encode("user"));
 	}
 }
