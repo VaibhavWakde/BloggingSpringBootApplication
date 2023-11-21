@@ -1,10 +1,13 @@
 package com.codewithdurgesh.blog.payloads;
 
+import com.codewithdurgesh.blog.entities.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -21,4 +24,6 @@ public class UserDto {
 	@NotEmpty
 	@Size(min = 3, max = 100, message = "about must be min of 3 chars and max of 10 chars !!")
 	private String about;
+
+	private Set<RoleDto> roles = new HashSet<>();
 }

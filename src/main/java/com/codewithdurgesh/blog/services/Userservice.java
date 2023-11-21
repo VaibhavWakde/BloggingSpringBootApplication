@@ -6,6 +6,8 @@ import com.codewithdurgesh.blog.entities.User;
 import com.codewithdurgesh.blog.payloads.UserDto;
 
 public interface Userservice {
+
+	UserDto registerNewUser(UserDto userDto);
 	
 	UserDto createUser(UserDto user);
 	
